@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 
 class Organism:
     @classmethod
-    def generate_graphs(cls, df, savepath='../outputs/img/'):
+    def generate_graphs(cls, df, savepath='outputs/img/'):
         cls.generate_mortality_graphs(df, savepath)
         cls.generate_demographic_graphs(df, savepath)
         cls.generate_copulation_graphs(df, savepath)

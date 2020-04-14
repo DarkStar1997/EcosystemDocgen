@@ -3,6 +3,7 @@ import sqlite3
 import argparse
 import pandas as pd
 import helper.generate_plots as plot_generator
+import helper.populate_latex as latex_populator
 
 def get_table(db_path: str, table_name: str):
     conn = sqlite3.connect(db_path)
@@ -21,9 +22,14 @@ def generate_report(db_path: str, full_species_name: str):
     df = get_table(db_path, table_name)
 
     if kingdom == 'animal':
-        plot_generator.Animal.generate_graphs(df, savepath='outputs/img/')
+        plot_generator.Animal.generate_graphs(df)
+        template = latex_populator.AnimalTemplate()
+        template.populate('report_' + kind)
+
     elif kingdom == 'plant':
-        plot_generator.Plant.generate_graphs(df, savepath='outputs/img/')
+        plot_generator.Plant.generate_graphs(df)
+        template = latex_populator.PlantTemplate()
+        template.populate('report_' + kind)
 
 
 if __name__ == '__main__':
