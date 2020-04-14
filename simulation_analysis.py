@@ -19,16 +19,20 @@ def generate_report(db_path: str, full_species_name: str):
     kingdom = full_species_name[0: full_species_name.find('/')]
     table_name = 'STATS_' + kind.upper()
 
+    extra_data = dict()
+    extra_data['kind'] = kind
+    extra_data['kingdom'] = kingdom
+
     df = get_table(db_path, table_name)
 
     if kingdom == 'animal':
         plot_generator.Animal.generate_graphs(df)
-        template = latex_populator.AnimalTemplate()
+        template = latex_populator.AnimalTemplate(extra_data=extra_data)
         template.populate('report_' + kind)
 
     elif kingdom == 'plant':
         plot_generator.Plant.generate_graphs(df)
-        template = latex_populator.PlantTemplate()
+        template = latex_populator.PlantTemplate(extra_data=extra_data)
         template.populate('report_' + kind)
 
 
