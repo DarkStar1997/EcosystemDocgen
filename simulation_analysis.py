@@ -12,6 +12,7 @@ def get_table(db_path: str, table_name: str):
     rows = cursor.fetchall()
     cols = list(map(lambda x: x[0], cursor.description))
     df = pd.DataFrame(rows, columns=cols).dropna()
+    conn.close()
     return df
 
 def generate_report(db_path: str, full_species_name: str):
